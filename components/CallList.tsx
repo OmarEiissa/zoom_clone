@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 "use client";
 
 import { useGetCalls } from "@/hooks/useGetCalls";
@@ -17,7 +15,7 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
   const router = useRouter();
   const [recordings, setRecordings] = useState<CallRecording[]>([]);
 
-  const {toast} = useToast()
+  const { toast } = useToast();
 
   const getCalls = () => {
     switch (type) {
@@ -62,18 +60,16 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
       } catch (error) {
         console.error(error);
         toast({
-          title:"Try Again Later"
-        })
+          title: "Try Again Later",
+        });
       }
     };
 
     if (type === "recordings") fetchRecordings();
-  }, [type, callRecordings,toast]);
+  }, [type, callRecordings, toast]);
 
   const calls = getCalls();
   const noCallsMessage = getNoCallsMessage();
-
-  console.log(calls[0]);
 
   if (isLoading) return <Loader />;
 
@@ -96,12 +92,14 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
               "Personal Meeting"
             }
             date={
-              (meeting as Call).state?.startsAt.toLocaleString() ||
+              (meeting as Call).state?.startsAt?.toLocaleString() ||
               (meeting as CallRecording).start_time?.toLocaleString() ||
               "No Date available"
             }
             isPreviousMeeting={type === "ended"}
-            buttonIcon1={type === "recordings" ? "/icons/play.svg" : "/icons/play.svg"}
+            buttonIcon1={
+              type === "recordings" ? "/icons/play.svg" : "/icons/play.svg"
+            }
             buttonText={type === "recordings" ? "Play" : "Start"}
             handleClick={
               type === "recordings"
