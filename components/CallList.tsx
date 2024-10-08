@@ -45,27 +45,6 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
     }
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
   useEffect(() => {
     const fetchRecordings = async () => {
       try {
@@ -77,7 +56,7 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
           .filter((call) => call.recordings.length > 0)
           .flatMap((call) => call.recordings);
 
-          setRecordings(recordings as unknown as CallRecording[]);
+        setRecordings(recordings as unknown as CallRecording[]);
       } catch (error) {
         console.error(error);
         toast({
@@ -85,30 +64,9 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
         });
       }
     };
-    
+
     if (type === "recordings") fetchRecordings();
   }, [type, callRecordings, toast]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
 
   const calls = getCalls();
   const noCallsMessage = getNoCallsMessage();
@@ -145,15 +103,23 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
             buttonText={type === "recordings" ? "Play" : "Start"}
             handleClick={
               type === "recordings"
-                ? () => router.push(`${meeting.url}`)
+                ? () => {
+                    if ("url" in meeting) {
+                      router.push(`${meeting.url}`);
+                    }
+                  }
                 : () => {
-                    router.push(`/meeting/${meeting.id}`);
+                    router.push(`/meeting/${(meeting as Call).id}`);
                   }
             }
             link={
               type === "recordings"
-                ? meeting.url
-                : `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${meeting.id}`
+                ? "url" in meeting
+                  ? meeting.url
+                  : ""
+                : `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${
+                    (meeting as Call).id
+                  }`
             }
           />
         ))
