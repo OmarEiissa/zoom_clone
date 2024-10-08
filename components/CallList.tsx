@@ -45,6 +45,27 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
     }
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
   useEffect(() => {
     const fetchRecordings = async () => {
       try {
@@ -56,7 +77,7 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
           .filter((call) => call.recordings.length > 0)
           .flatMap((call) => call.recordings);
 
-        setRecordings(recordings);
+          setRecordings(recordings as unknown as CallRecording[]);
       } catch (error) {
         console.error(error);
         toast({
@@ -64,9 +85,30 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
         });
       }
     };
-
+    
     if (type === "recordings") fetchRecordings();
   }, [type, callRecordings, toast]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
 
   const calls = getCalls();
   const noCallsMessage = getNoCallsMessage();
