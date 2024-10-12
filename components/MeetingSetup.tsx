@@ -13,7 +13,7 @@ const MeetingSetup = ({
 }: {
   setIsSetupComplete: (value: boolean) => void;
 }) => {
-  const [isMicCamToggleOn, setIsMicCamToggleOn] = useState(false);
+  const [isMicCamToggleOn, setIsMicCamToggleOn] = useState(true);
 
   const call = useCall();
 
@@ -43,7 +43,7 @@ const MeetingSetup = ({
             onChange={() => setIsMicCamToggleOn(!isMicCamToggleOn)}
             // onChange={(e) => setIsMicCamToggleOn(e.target.checked)}
           />
-          Join with mic and camera off
+          Join with mic and camera on
         </label>
         <DeviceSettings />
       </div>
